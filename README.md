@@ -1,6 +1,6 @@
 # 🧠 AI-Powered Image Categorization for E-Commerce
 
-This project showcases a practical application of Artificial Intelligence (AI), Deep Learning (CNN), and Data Analysis in the e-commerce industry. The goal is to automatically classify product images into categories using a Convolutional Neural Network (CNN), and to integrate visual and structured data for better insights and decision-making.
+This project showcases a practical application of Artificial Intelligence (AI), Computer Vision techniques, and Data Analysis in the e-commerce domain. It focuses on automatically classifying product images into categories by extracting visual features (e.g., brightness, dimensions, color distribution) and combining them with structured product data. The solution uses traditional machine learning models for fast, interpretable, and efficient performance—without relying on deep learning.
 
 ## 📊 Project Summary
 
@@ -78,7 +78,6 @@ The dataset simulates a real e-commerce environment and contains:
 
 ## 📈 Key Results
 
-- CNN achieved effective classification of product images into two categories.
 - The model can support recommendation systems and automated product tagging.
 - Image-based insights enriched structured data understanding.
 
@@ -115,14 +114,12 @@ The dataset simulates a real e-commerce environment and contains:
 - Pandas, NumPy
 - Matplotlib, Seaborn
 - scikit-learn classifiers
-- CNN (Convolutional Neural Networks)
 - Jupyter Notebook
 
 ---
 
 ## ⭐ Highlights — 
-  🔍 Combined structured and image data for real-world product classification 
-  🧠 Used deep learning (CNN) without relying on high-level TensorFlow tools 
+  🔍 Combined structured and image data for real-world product classification  
   📊 Created presentation-ready dashboards for client use
 
 
