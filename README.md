@@ -6,7 +6,7 @@ This project showcases a practical application of Artificial Intelligence (AI), 
 
 - **Title**: AI-Powered Image Categorization for E-Commerce
 - **Type**: Freelance-Style Portfolio Project
-- **Skills**: Data Science · Image Classification · Deep Learning · Convolutional Neural Networks · Python · Pandas · Matplotlib . scikit-learn classifiers  · EDA · Visualization
+- **Skills**: Data Science · Image Classification · Python · Pandas · Matplotlib . scikit-learn classifiers  · EDA · Visualization
 
 
  ## 🧰 Tools & Technologies  
@@ -91,10 +91,9 @@ The dataset simulates a real e-commerce environment and contains:
 🔗 [LinkedIn](https://linkedin.com/in/mohamed-alshahat-8754992a4)  
 🔗 [GitHub](https://github.com/Alshahatmohamed)
 
----
-👨‍💻 About the Developer 
-— Mohamed Alshahat 
-– Data Analyst & AI Developer 
+ 👨‍💻 About the Developer 
+    Mohamed Alshahat 
+  Data Analyst & AI Developer 
 • Specialized in combining machine learning, computer vision, and real-world data analysis 
 • Focused on building elegant, freelance-ready portfolio projects with real impact 
 • Available for freelance work via platforms like Upwork & Freelancer
@@ -121,5 +120,6 @@ The dataset simulates a real e-commerce environment and contains:
 ## ⭐ Highlights — 
   🔍 Combined structured and image data for real-world product classification  
   📊 Created presentation-ready dashboards for client use
+  
 
 
