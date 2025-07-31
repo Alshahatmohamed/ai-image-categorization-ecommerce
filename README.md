@@ -1,125 +1,129 @@
-# 🧠 AI-Powered Image Categorization for E-Commerce
+# 🧠🛒 AI-Powered E-Commerce Product Classification using Machine Learning & Deep Learning (PyTorch)
 
-This project showcases a practical application of Artificial Intelligence (AI), Computer Vision techniques, and Data Analysis in the e-commerce domain. It focuses on automatically classifying product images into categories by extracting visual features (e.g., brightness, dimensions, color distribution) and combining them with structured product data. The solution uses traditional machine learning models for fast, interpretable, and efficient performance—without relying on deep learning.
+## 📌 Project Summary  
+This project aims to automatically classify e-commerce products into predefined categories (A or B) using structured metadata (price, rating, etc.) and image data. It leverages a full machine learning pipeline with exploratory data analysis (EDA), feature engineering, classical ML models, and deep learning via PyTorch (CNN + Transfer Learning with ResNet18). This end-to-end solution simulates a real e-commerce scenario where both text and image inputs contribute to smart automation of product classification.
 
-## 📊 Project Summary
+## 📦 Dataset Overview  
+The dataset mimics a realistic online store with both tabular and image data. It contains:  
+• 🖼️ 200 high-quality product images (`product-1.jpg`, `product-2.jpg`, ..., `product-200.jpg`)  
+• 📄 CSV file (`ecommerce_data.csv`) with the following columns:  
+| Column | Description |  
+|--------|-------------|  
+| Product_ID | Unique product identifier (e.g., P001) |  
+| Product_Name | Name of the product |  
+| Price | Product price in USD |  
+| Rating | Customer rating (1 to 5) |  
+| Category | Product category (A or B) |  
+| Image_Filename | Image filename associated with the product |  
+> ⚠️ **Note**: Images are not included in the current version, but the model structure fully supports them.
 
-- **Title**: AI-Powered Image Categorization for E-Commerce
-- **Type**: Freelance-Style Portfolio Project
-- **Skills**: Data Science · Image Classification · Python · Pandas · Matplotlib . scikit-learn classifiers  · EDA · Visualization
-
-
- ## 🧰 Tools & Technologies  
-- **Languages**: Python  
-- **Libraries**: Pandas, NumPy, Matplotlib, Seaborn, scikit-learn (metrics, model_selection)  
-- **Image Handling**: PIL, manual image loading with Matplotlib  
-- **Development**: Jupyter Notebook  
-- **Assets**: 200 Real Product Images + CSV Dataset
-
-
----
-
-## 📁 Dataset Overview
-
-The dataset simulates a real e-commerce environment and contains:
-
-- 🖼️ **200 high-quality product images** named `product-1.jpg`, `product-2.jpg`, etc.
-- 📄 **Structured CSV file** (`ecommerce_data.csv`) with the following columns:
-
-| Column           | Description                                 |
-|------------------|---------------------------------------------|
-| Product_ID       | Unique product identifier (e.g., P001)      |
-| Product_Name     | Name of the product                         |
-| Price            | Product price in USD                        |
-| Rating           | Customer rating (1 to 5)                    |
-| Category         | Product category (A or B)                   |
-| Image_Filename   | Corresponding image filename                |
+## 🔧 Tools & Technologies Used  
+- Python, Pandas, NumPy, Seaborn, Matplotlib  
+- Scikit-learn (Random Forest, Label Encoding, Evaluation)  
+- PyTorch (Deep Learning CNN + Transfer Learning using ResNet18)  
+- PIL, TorchVision (Image preprocessing and augmentation)  
+- Google Colab / Jupyter Notebook
 
 ---
 
-## 🚀 Project Phases
-
-### ✅ Phase 1: Exploratory Data Analysis (EDA)
-- Analyzed pricing distribution, customer ratings, category splits, and basic product insights.
-- Visualized category-wise patterns and missing values.
-- Key findings: Balanced category distribution, slight bias in average ratings across categories.
-
-### ✅ Phase 2: Data Preprocessing & Cleaning
-- Cleaned structured data, ensured all images exist and match their filenames.
-- Checked for missing/null values (None found).
-- Verified image dimensions, file integrity, and consistency.
-
-### ✅ Phase 3: Image Loading & Visualization
-- Loaded and visualized product images using Matplotlib.
-- Displayed random samples per category for quality assurance.
-- Ensured proper mapping between image files and structured data.
-
-### ✅ Phase 4: Feature Extraction & Machine Learning Classification  
-- Extracted basic image features: size, mode, pixel-level metrics (e.g., mean brightness, color distribution).  
-- Engineered a feature set combining structured and visual attributes.  
-- Used scikit-learn classifiers like RandomForestClassifier and LogisticRegression to classify Category A vs B.  
-- Split data using train_test_split, evaluated models with accuracy_score, classification_report, and confusion_matrix.  
-- Best-performing model achieved strong predictive accuracy without the need for deep learning.  
-  
-📝 **Note**: Instead of deep learning (CNN), we opted for a lightweight ML approach using image-level statistics + structured features for faster prototyping and higher interpretability.
-
-
-### ✅ Phase 5: Integration of Structured & Visual Data
-- Combined model predictions with structured fields (e.g., price, rating).
-- Explored correlation between visual category predictions and numerical data.
-- Detected patterns like high-rated products clustering in Category A.
-
-### ✅ Phase 6: Final Dashboard & Summary
-- Created summary visualizations for final insights.
-- Exported model performance metrics (accuracy, loss).
-- Prepared the results for delivery as both a **notebook** and **PDF**.
+## 📊 Phase 1: Exploratory Data Analysis (EDA)  
+- Loaded and inspected product metadata  
+- Plotted price and rating distributions  
+- Visualized category counts  
+- Boxplots to compare price and rating across categories  
+- Scatter plot of price vs rating to understand correlations  
+✅ Outcome: Clean, well-distributed dataset with no missing values and strong feature signals.
 
 ---
 
-## 📈 Key Results
-
-- The model can support recommendation systems and automated product tagging.
-- Image-based insights enriched structured data understanding.
+## 🧪 Phase 2: Feature Engineering  
+- Checked for skewness in price → considered log transformation  
+- Encoded "Category" labels using LabelEncoder  
+- Combined multiple visualizations to reveal patterns  
+- Created "Price per Rating" as an engineered feature (optional)  
+✅ Outcome: Features prepared for training with classical models.
 
 ---
 
-## 👨‍💻 Developed by
+## 🤖 Phase 3: Machine Learning Model (Structured Data)  
+- Used `RandomForestClassifier` with basic hyperparameters  
+- Trained using Price and Rating to predict product Category  
+- Achieved strong baseline accuracy on validation set  
+✅ Output: Classical model serves as benchmark for comparison with CNN.
 
+---
+
+## 🧠 Phase 4: Deep Learning - Image Classification using PyTorch  
+A full image-based classifier was built using PyTorch from scratch:  
+1. **Data Preparation**  
+   - Custom PyTorch `Dataset` created to load images and labels from CSV  
+   - Applied image transforms: resize, normalization, horizontal flip  
+   - DataLoaders for training and validation  
+
+2. **Model Definition**  
+   - Used pre-trained `ResNet18` as base CNN  
+   - Modified final fully-connected layer to output 2 classes (A/B)  
+   - Moved model to GPU if available  
+
+3. **Training Loop**  
+   - CrossEntropyLoss + Adam optimizer  
+   - 5 epochs training with accuracy printed per epoch  
+
+4. **Model Saving**  
+   - Trained model saved as `product_classifier_pytorch.pth`  
+
+✅ Output: A deep learning model ready to classify products using images alone. Can be combined with metadata later for multi-modal classification.
+
+---
+
+## 📈 Phase 5: Evaluation & Visualization  
+- Tracked training accuracy and loss over epochs  
+- Visualized performance curves (accuracy & loss)  
+- Final evaluation on validation set showed strong generalization  
+- Exported performance report and insights for business stakeholders  
+✅ Result: Ready-to-deploy image-based classifier for real-world usage.
+
+---
+
+## 💡 Business Applications  
+- Automatic tagging and classification of newly uploaded products  
+- Fraud detection (image-label mismatch)  
+- Hybrid recommender systems using structured + visual data  
+- Enhanced user experience with consistent product grouping  
+
+---
+
+## 📁 Project Deliverables  
+- Cleaned structured dataset (`ecommerce_data.csv`)  
+- Complete Python codebase (ML + Deep Learning)  
+- Trained PyTorch model (`product_classifier_pytorch.pth`)  
+- Jupyter notebooks and visualizations  
+- Readable, well-documented `README.md`  
+
+---
+
+## 👨‍💻 Developed by  
 **Mohamed Alshahat**  
- Data Analyst & AI Developer  
- 
-🔗 [LinkedIn](https://linkedin.com/in/mohamed-alshahat-8754992a4)  
-🔗 [GitHub](https://github.com/Alshahatmohamed)
+🔗 GitHub: [github.com/Alshahatmohamed](https://github.com/Alshahatmohamed)  
+🔗 LinkedIn: [linkedin.com/in/mohamed-alshahat-8754992a4](https://linkedin.com/in/mohamed-alshahat-8754992a4)  
+🧠 AI & Data Science Enthusiast | E-Commerce Automation | PyTorch & ML
 
- 👨‍💻 About the Developer 
-    Mohamed Alshahat 
-  Data Analyst & AI Developer 
+👨‍💻 About the Developer Mohamed Alshahat Data Analyst & AI Developer 
 • Specialized in combining machine learning, computer vision, and real-world data analysis 
 • Focused on building elegant, freelance-ready portfolio projects with real impact 
 • Available for freelance work via platforms like Upwork & Freelancer
-
-
-## 💼 Use Cases
-
-- Automated product categorization for e-commerce platforms.
-- Enhancing product listing workflows with AI.
-- Visual quality control and tagging systems.
-
 ---
 
-## 🧠 Technologies Used
+💼 Use Cases  
+- Product categorization for online marketplaces  
+- AI-assisted product tagging pipelines  
+- Lightweight visual quality control systems  
 
-- Python 3.x
-- Pandas, NumPy
-- Matplotlib, Seaborn
-- scikit-learn classifiers
-- Jupyter Notebook
+🧠 Technologies Used  
+Python 3.x · Pandas · NumPy · Matplotlib · Seaborn  
+scikit-learn · PyTorch · Jupyter Notebook  
 
----
-
-## ⭐ Highlights — 
-  🔍 Combined structured and image data for real-world product classification  
-  📊 Created presentation-ready dashboards for client use
-  
-
-
+⭐ Highlights  
+🔍 Combined structured and visual data for intelligent classification  
+📊 Built real-time dashboards and machine learning pipelines  
+⚙️ Switched from classic ML to PyTorch-based deep learning for scalability
