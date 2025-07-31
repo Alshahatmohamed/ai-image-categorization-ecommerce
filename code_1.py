@@ -252,7 +252,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
 #  Step 1: Load the CSV metadata
-csv_path = "ecommerce_data.csv"
+csv_path = "product_data.csv"
 df = pd.read_csv(csv_path)
 
 # Encode categories as integers (e.g., A → 0, B → 1)
@@ -286,7 +286,7 @@ class ECommerceImageDataset(Dataset):
         return len(self.dataframe)
 
     def __getitem__(self, idx):
-        img_name = self.dataframe.iloc[idx]["Image_Filename"]
+        img_name = self.dataframe.iloc[idx]["Image_URL"]
         label = self.dataframe.iloc[idx]["Label"]
         img_path = os.path.join(self.img_dir, img_name)
         image = Image.open(img_path).convert("RGB")
@@ -296,12 +296,70 @@ class ECommerceImageDataset(Dataset):
 
         return image, label
 
-#  Step 5: Create DataLoaders
-train_dataset = ECommerceImageDataset(train_df, "images", transform=image_transforms["train"])
-val_dataset = ECommerceImageDataset(val_df, "images", transform=image_transforms["val"])
+#  Step 5: Create DataLoaders 
+import os
+from PIL import Image
+from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms
+import pandas as pd
 
-train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False)
+class LocalImageDataset(Dataset):
+    def __init__(self, dataframe, image_folder, transform=None):
+        self.image_folder = image_folder
+        self.transform = transform
+        self.valid_data = []
+
+        for _, row in dataframe.iterrows():
+            image_filename = row['Image_Filename']  # Column containing image filenames
+            image_path = os.path.join(self.image_folder, image_filename)
+
+            if os.path.exists(image_path):
+                try:
+                    # Try to open the image to make sure it is valid
+                    with Image.open(image_path) as img:
+                        img.verify()
+                    self.valid_data.append((image_path, row))
+                except Exception:
+                    continue
+
+        print(f"{len(self.valid_data)} valid images loaded out of {len(dataframe)} ({100 * len(self.valid_data) / len(dataframe):.2f}%)")
+
+    def __len__(self):
+        return len(self.valid_data)
+
+    def __getitem__(self, idx):
+        image_path, row = self.valid_data[idx]
+        image = Image.open(image_path).convert('RGB')
+
+        if self.transform:
+            image = self.transform(image)
+
+        return image, row.to_dict()  # You can modify this to return only the label if needed
+
+#  Define image transformations
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+])
+
+#  Load data from the CSV file
+df = pd.read_csv("product_data.csv")  # ← Replace with your actual CSV filename
+
+#  Initialize the custom dataset
+dataset = LocalImageDataset(df, image_folder="images", transform=transform)
+
+#  Load images using DataLoader (only if valid images are found)
+if not os.path.exists("images"):
+    print("'images' folder not found. Please add the images to run the model.")
+elif len(dataset) == 0:
+    print(" No valid images found. Please check your image folder or filenames.")
+else:
+    loader = DataLoader(dataset, batch_size=16, shuffle=True)
+    print(" DataLoader is ready!")
+    for images, labels in loader:
+        print(f"Batch of images: {images.shape}")
+        print(f"Labels: {labels}")
+        break
 
 #  Step 6: Define the CNN model (using pre-trained ResNet18)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -323,7 +381,7 @@ for epoch in range(num_epochs):
     correct_predictions = 0
     total_samples = 0
 
-    for images, labels in train_loader:
+    for images, labels in loader:
         images, labels = images.to(device), labels.to(device)
 
         optimizer.zero_grad()
