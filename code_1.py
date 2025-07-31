@@ -231,50 +231,119 @@ accuracy = accuracy_score(y_test, y_pred)
 print(" Model Accuracy:", round(accuracy * 100, 2), "%")
 print("\n Classification Report:\n", classification_report(y_test, y_pred, target_names=label_encoder.classes_))
 
+
 # -----------------------------------
-# Phase 5: Image Classification Using Random Forest (Alternative to CNN)
+# Phase 5: Image Classification Using PyTorch
 # -----------------------------------
 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-import numpy as np
-import pandas as pd
+
+#  Deep Learning Image Classifier using PyTorch
+# This model uses a Convolutional Neural Network (CNN) to classify products based on their images.
+
 import os
+import pandas as pd
 from PIL import Image
+from torchvision import datasets, transforms, models
+from torch.utils.data import Dataset, DataLoader
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
-# Load the CSV file
-df = pd.read_csv("product_data.csv")  # ← Change the file name accordingly
+#  Step 1: Load the CSV metadata
+csv_path = "ecommerce_data.csv"
+df = pd.read_csv(csv_path)
 
-# Prepare image data and labels
-image_data = []
-labels = []
+# Encode categories as integers (e.g., A → 0, B → 1)
+label_encoder = LabelEncoder()
+df["Label"] = label_encoder.fit_transform(df["Category"])
 
-# Process each image
-for idx, row in df.iterrows():
-    image_path = os.path.join("images_folder", row["Image_URL"])  # ← Change this to your actual image folder
-    try:
-        img = Image.open(image_path).resize((64, 64)).convert('RGB')  # Resize and convert to RGB
-        img_array = np.array(img).flatten()  # Flatten the image into a 1D array
-        image_data.append(img_array)
-        labels.append(row["Category"])  # ← Change this to the name of the label column
-    except:
-        continue  # Skip if the image is missing or corrupted
+#  Step 2: Split data into training and validation
+train_df, val_df = train_test_split(df, test_size=0.2, random_state=42, stratify=df["Label"])
 
-# Convert lists to NumPy arrays
-X = np.array(image_data)
-y = np.array(labels)
+#  Step 3: Define image transformations
+image_transforms = {
+    "train": transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ]),
+    "val": transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+    ]),
+}
 
-# Split the dataset into training and testing
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+#  Step 4: Custom Dataset class
+class ECommerceImageDataset(Dataset):
+    def __init__(self, dataframe, img_dir, transform=None):
+        self.dataframe = dataframe
+        self.img_dir = img_dir
+        self.transform = transform
 
-# Train the Random Forest model
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
+    def __len__(self):
+        return len(self.dataframe)
 
-# Evaluate the model
-y_pred = model.predict(X_test)
-print(classification_report(y_test, y_pred))
+    def __getitem__(self, idx):
+        img_name = self.dataframe.iloc[idx]["Image_Filename"]
+        label = self.dataframe.iloc[idx]["Label"]
+        img_path = os.path.join(self.img_dir, img_name)
+        image = Image.open(img_path).convert("RGB")
+        
+        if self.transform:
+            image = self.transform(image)
+
+        return image, label
+
+#  Step 5: Create DataLoaders
+train_dataset = ECommerceImageDataset(train_df, "images", transform=image_transforms["train"])
+val_dataset = ECommerceImageDataset(val_df, "images", transform=image_transforms["val"])
+
+train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False)
+
+#  Step 6: Define the CNN model (using pre-trained ResNet18)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+model = models.resnet18(pretrained=True)
+num_features = model.fc.in_features
+model.fc = nn.Linear(num_features, 2)  # Two classes: Category A and B
+model = model.to(device)
+
+#  Step 7: Define loss function and optimizer
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+#  Step 8: Training loop
+num_epochs = 5
+for epoch in range(num_epochs):
+    model.train()
+    running_loss = 0.0
+    correct_predictions = 0
+    total_samples = 0
+
+    for images, labels in train_loader:
+        images, labels = images.to(device), labels.to(device)
+
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+        _, preds = torch.max(outputs, 1)
+        correct_predictions += (preds == labels).sum().item()
+        total_samples += labels.size(0)
+
+    accuracy = 100 * correct_predictions / total_samples
+    print(f"Epoch {epoch+1}/{num_epochs}, Loss: {running_loss:.4f}, Accuracy: {accuracy:.2f}%")
+
+#  Step 9: Save the trained model
+torch.save(model.state_dict(), "product_classifier_pytorch.pth")
+print(" Model saved successfully as 'product_classifier_pytorch.pth'")
+
 
 # -------------------------------------
 # PHASE 6: EVALUATION & FINAL SUMMARY
