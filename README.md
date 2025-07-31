@@ -22,7 +22,7 @@ product-2.jpg
 ## 📦 Dataset Overview  
 The dataset mimics a realistic online store with both tabular and image data. It contains:  
 • 🖼️ 200 high-quality product images (`product-1.jpg`, `product-2.jpg`, ..., `product-200.jpg`)  
-• 📄 CSV file (`Product_data.csv`) with the following columns:  
+• 📄 CSV file (`product_data.csv`) with the following columns:  
 | Column | Description |  
 |--------|-------------|  
 | Product_ID | Unique product identifier (e.g., P001) |  
