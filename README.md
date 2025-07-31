@@ -2,11 +2,27 @@
 
 ## 📌 Project Summary  
 This project aims to automatically classify e-commerce products into predefined categories (A or B) using structured metadata (price, rating, etc.) and image data. It leverages a full machine learning pipeline with exploratory data analysis (EDA), feature engineering, classical ML models, and deep learning via PyTorch (CNN + Transfer Learning with ResNet18). This end-to-end solution simulates a real e-commerce scenario where both text and image inputs contribute to smart automation of product classification.
-
+## 📁 Project Directory Structure
+To ensure everything runs smoothly, please organize your project files as follows:
+AI-Powered Image Categorization for E-Commerce/
+│
+├── your_data.csv           ← CSV file containing product data and image filenames
+├── code.py                 ← Main Python script for image categorization
+├── project-poster.jpg      ← Project poster or thumbnail image
+├── images/                 ← 📁 Folder containing product images
+│   ├── product-1.jpg
+│   ├── product-2.jpg
+│   ├── ...
+🔹 Important Notes:
+	•	The images/ folder must be placed in the same directory as the Python script and the CSV file.
+	•	Inside the CSV file, the image filenames (in the Image_URL column) should be just the names, such as:
+product-1.jpg
+product-2.jpg
+⚠️ **Note**: Images are not included in the current version of this repository to reduce file size. However, the code is fully functional and ready to work with images — just place your product images inside the /images folder, as specified in the README
 ## 📦 Dataset Overview  
 The dataset mimics a realistic online store with both tabular and image data. It contains:  
 • 🖼️ 200 high-quality product images (`product-1.jpg`, `product-2.jpg`, ..., `product-200.jpg`)  
-• 📄 CSV file (`ecommerce_data.csv`) with the following columns:  
+• 📄 CSV file (`Product_data.csv`) with the following columns:  
 | Column | Description |  
 |--------|-------------|  
 | Product_ID | Unique product identifier (e.g., P001) |  
