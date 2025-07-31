@@ -117,7 +117,7 @@ A full image-based classifier was built using PyTorch from scratch:
 ---
 
 ## 📁 Project Deliverables  
-- Cleaned structured dataset (`ecommerce_data.csv`)  
+- Cleaned structured dataset (`product_data.csv`)  
 - Complete Python codebase (ML + Deep Learning)  
 - Trained PyTorch model (`product_classifier_pytorch.pth`)  
 - Jupyter notebooks and visualizations  
