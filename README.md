@@ -108,10 +108,12 @@ A full image-based classifier was built using PyTorch from scratch:
 🔗 LinkedIn: [linkedin.com/in/mohamed-alshahat-8754992a4](https://linkedin.com/in/mohamed-alshahat-8754992a4)  
 🧠 AI & Data Science Enthusiast | E-Commerce Automation | PyTorch & ML
 
-👨‍💻 About the Developer Mohamed Alshahat Data Analyst & AI Developer 
+👨‍💻 About the Developer — Mohamed Alshahat · Data Analyst & AI Developer 
 • Specialized in combining machine learning, computer vision, and real-world data analysis 
 • Focused on building elegant, freelance-ready portfolio projects with real impact 
-• Available for freelance work via platforms like Upwork & Freelancer
+• Available for freelance work via platforms 
+
+
 ---
 
 💼 Use Cases  
