@@ -16,9 +16,11 @@ AI-Powered Image Categorization for E-Commerce
 
 ├── images/                 ← 📁 Folder containing product images
 
-│   ├── product-1.jpg
-│   ├── product-2.jpg
-│   ├── ...
+   │   ├── product-1.jpg
+ 
+   │   ├── product-2.jpg
+ 
+   │   ├── ...
 
 
 🔹 Important Notes:
