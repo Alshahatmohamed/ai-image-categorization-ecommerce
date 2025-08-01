@@ -8,13 +8,13 @@ AI-Powered Image Categorization for E-Commerce
 
 
 
-├── your_data.csv           ← CSV file containing product data and image filenames
+├── your_data.csv              ← CSV file containing product data and image filenames
 
-├── code.py                 ← Main Python script for image categorization
+├── code.py                    ← Main Python script for image categorization
 
-├── project-poster.jpg      ← Project poster or thumbnail image
+├── project-poster.jpg         ← Project poster or thumbnail image
 
-├── images/                 ← 📁 Folder containing product images
+├── images/                    ← 📁 Folder containing product images
 
    │   ├── product-1.jpg
  
