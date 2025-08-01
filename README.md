@@ -7,7 +7,7 @@ To ensure everything runs smoothly, please organize your project files as follow
 
 AI-Powered Image Categorization for E-Commerce/
 
-
+|
 
 ├── your_data.csv              ← CSV file containing product data and image filenames
 
