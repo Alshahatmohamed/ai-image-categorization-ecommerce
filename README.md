@@ -133,7 +133,7 @@ A full image-based classifier was built using PyTorch from scratch:
 
 👨‍💻 About the Developer — Mohamed Alshahat · Data Analyst & AI Developer 
 • Specialized in combining machine learning, computer vision, and real-world data analysis 
-• Focused on building elegant, freelance-ready portfolio projects with real impact 
+• Focused on building practical, impact-driven solutions grounded in realistic business scenarios — projects designed to solve real-world problems and attract real clients
 • Available for freelance work via platforms 
 
 
