@@ -4,7 +4,8 @@
 This project aims to automatically classify e-commerce products into predefined categories (A or B) using structured metadata (price, rating, etc.) and image data. It leverages a full machine learning pipeline with exploratory data analysis (EDA), feature engineering, classical ML models, and deep learning via PyTorch (CNN + Transfer Learning with ResNet18). This end-to-end solution simulates a real e-commerce scenario where both text and image inputs contribute to smart automation of product classification.
 ## 📁 Project Directory Structure
 To ensure everything runs smoothly, please organize your project files as follows:
-AI-Powered Image Categorization for E-Commerce
+
+AI-Powered Image Categorization for E-Commerce/
 
 
 
